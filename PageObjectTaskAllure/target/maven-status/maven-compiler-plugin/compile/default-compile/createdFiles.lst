@@ -1,0 +1,13 @@
+pages\BasePage.class
+steps\CategoryPageSteps.class
+util\TestProperties.class
+util\AllureReporter.class
+steps\BaseSteps.class
+steps\ScenarioSteps.class
+pages\MainPage.class
+pages\CategoryPage.class
+steps\MainPageSteps.class
+pages\MarketPage.class
+pages\AllFiltersPage.class
+steps\MarketPageSteps.class
+pages\SubcategoryPage.class
