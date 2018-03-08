@@ -7,7 +7,7 @@ import ru.yandex.qatools.allure.annotations.Step;
 
 public class MainPageSteps {
 
-    @Step("выбран пункт меню {0}")
+    @Step("выбран пункт меню \"Маркет\"")
     public void openMarketPage(){
         new MainPage().openMarketPage();
     }

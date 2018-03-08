@@ -6,17 +6,21 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import steps.BasePageSteps;
+
+import java.util.concurrent.TimeUnit;
 
 public class SubcategoryPage extends BasePage {
-    public SubcategoryPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+    public SubcategoryPage() {
+        PageFactory.initElements(BasePageSteps.getDriver(), this);
     }
 
-    private static String firstElement;
+    public static String firstElement;
+
+    private static boolean listViewMode;
 
     @FindBy(xpath = ".//a[contains(text(), 'Перейти ко всем фильтрам')]")
-    private WebElement openTVAllFiltersBtn;
+    private WebElement openAllFiltersBtn;
 
     @FindBy(xpath = "//div[contains(@class, 'n-snippet-card2__title')]//a")
     private WebElement elementFromList;
@@ -33,43 +37,48 @@ public class SubcategoryPage extends BasePage {
     @FindBy(xpath = ".//*[@class='n-title__text']//h1")
     private WebElement productTitle;
 
+    @FindBy(xpath = ".//*[contains(@class, 'radio-button__radio_side_right')]")
+    private WebElement listViewBtn;
 
-    public AllFiltersPage openTVAllFilters() {
-        openTVAllFiltersBtn.click();
-        return new AllFiltersPage(driver);
+
+    public void openAllFilters() {
+        openAllFiltersBtn.click();
     }
 
-    public SubcategoryPage checkElementsCount(String count, String xpath){
-        Assert.assertEquals("Кол-во элементов не равно "+count, count, String.valueOf(driver.findElements(By.xpath(xpath)).size()));
-        return new SubcategoryPage(driver);
+    public void checkElementsCount( int count){
+        listViewMode = listViewBtn.getAttribute("class").contains("checked_yes");
+        if(listViewMode)
+            Assert.assertTrue("Кол-во элементов менее 12", driver.findElements(By.xpath("//div[contains(@class, 'n-snippet-card2__title')]//a")).size()>=count);
+        else
+            Assert.assertTrue("Кол-во элементов менее 12", driver.findElements(By.xpath("//div[contains(@class, 'n-snippet-cell2__title')]//a")).size()>=count);
     }
 
-    public SubcategoryPage remFirstElement(String view){
-        if(view.equals("fromList"))
+    public void remFirstElement(){
+        listViewMode = listViewBtn.getAttribute("class").contains("checked_yes");
+        if(listViewMode)
             firstElement = elementFromList.getText();
-        if(view.equals("fromCells"))
+        else
             firstElement = elementFromCells.getText();
-        return new SubcategoryPage(driver);
     }
 
-    public SubcategoryPage fillSearchWithRemValue(){
+    public void fillSearchWithRemValue(){
         searchInput.sendKeys(firstElement);
-        return new SubcategoryPage(driver);
     }
 
-    public SubcategoryPage search(){
+    public void findProductAndCompare(){
         searchBtn.click();
-        return new SubcategoryPage(driver);
-    }
-
-    public SubcategoryPage compareTitleWithRemValue(){
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+        if(driver.findElements(By.xpath(".//*[@class='n-title__text']//h1")).isEmpty())
+            openFirstElement();
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         Assert.assertEquals("Первый товар в списке не совпадает с запомненным", firstElement, productTitle.getText());
-        return new SubcategoryPage(driver);
     }
 
-    public SubcategoryPage openFirstElement(){
-        elementFromCells.click();
-        return new SubcategoryPage(driver);
+    public void openFirstElement(){
+        if(listViewMode)
+            elementFromList.click();
+        else
+            elementFromCells.click();
     }
 
 }

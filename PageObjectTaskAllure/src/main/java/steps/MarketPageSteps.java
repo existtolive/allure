@@ -1,12 +1,11 @@
 package steps;
 
-import pages.MainPage;
 import pages.MarketPage;
 import ru.yandex.qatools.allure.annotations.Step;
 
 public class MarketPageSteps {
 
-    @Step("выбран пункт меню Маркета{0}")
+    @Step("выбран пункт меню Маркета \"Электроника\"")
     public void openElectronicsCategoryPage(){ new MarketPage().openElectronicsCategoryPage(); }
 
 }
