@@ -12,6 +12,7 @@ import steps.BasePageSteps;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class CartPage extends BasePage {
 
@@ -25,8 +26,11 @@ public class CartPage extends BasePage {
     @FindBy(xpath = ".//div[contains(@class, 'jsRemoveAll')]")
     public WebElement removeAllBtn;
 
+    @FindBy(xpath = ".//div[contains(@class, 'eCartTotal_infoCount')]")
+    public WebElement cartInfo;
+
     @FindBy(xpath = ".//div[@class='eCartPage_title']//span[contains(text(), 'Корзина') and contains(text(), 'пуста')]")
-    public List<WebElement> emptyCartMsgList;
+    public WebElement emptyCartMsg;
     
     public void checkItemInCart(){
         for (WebElement item: cartItemsList) {
@@ -39,24 +43,14 @@ public class CartPage extends BasePage {
     }
 
     public void removeAll() {
-
-        try{
-            TimeUnit.SECONDS.sleep(7);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        //if(waitForElement(removeAllBtn, 10))
+        if(waitForElement(cartInfo, 10)){
             removeAllBtn.click();
-
-//        unknown error: Element <div class="bIconButton mRemove mGray jsRemoveAll">...</div> is not clickable at point (853, 321). Other element would receive the click: <div class="bCartPage
-//        mBlockActions
-//        ">...</div>
+        }
 
     }
 
     public void checkCart(){
-        Assert.assertTrue("Корзина не пуста", !emptyCartMsgList.isEmpty());
+        Assert.assertTrue("Корзина не пуста", waitForElement(emptyCartMsg, 10));
     }
 
 }

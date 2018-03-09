@@ -40,7 +40,8 @@ public class BasePageSteps {
         }
 
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
+        driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
     }
 
     @After
