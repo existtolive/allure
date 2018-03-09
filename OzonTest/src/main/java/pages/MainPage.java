@@ -23,10 +23,10 @@ public class MainPage extends BasePage {
     public List<WebElement> menuItemList;
 
     @FindBy(xpath = ".//div[contains(@class, 'eDYbanner_close')]")
-    public List<WebElement> bannerCloseBtn;
+    public WebElement bannerCloseBtn;
 
     public void openOzonPage() {
-        driver.get("https://www.ozon.ru/");
+        driver.get(BasePageSteps.properties.getProperty("app.url"));
     }
 
     public void windowMaximize() {
@@ -35,15 +35,9 @@ public class MainPage extends BasePage {
     }
 
     public void closeBanner(){
-        try{
-            TimeUnit.SECONDS.sleep(10);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        if(!bannerCloseBtn.isEmpty())
-            bannerCloseBtn.get(0).click();
-
+        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+        if( waitForElement(bannerCloseBtn, 10))
+            bannerCloseBtn.click();
     }
 
     public void selectMenuItem(String itemName){

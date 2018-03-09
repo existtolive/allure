@@ -16,13 +16,13 @@ public class ScenarioSteps {
     AllFiltersPageSteps allFiltersPageSteps = new AllFiltersPageSteps();
 
 
-    @When("^выбран пункт меню \"Маркет\"$")
-    public void openMarketPage(){
-        mainPageSteps.openMarketPage();
+    @When("^выбран пункт меню \"(.+)\"$")
+    public void openSection(String itemName){
+        mainPageSteps.openSection(itemName);
     }
 
-    @When("^выбран пункт меню Маркета \"Электроника\"$")
-    public void openElectronicsCategoryPage(){ marketPageSteps.openElectronicsCategoryPage();
+    @When("^выбран пункт меню Маркета \"(.+)\"$")
+    public void openCategoryPage(String itemName){ marketPageSteps.openCategoryPage(itemName);
     }
 
     @When("^выбран подпункт \"(.+)\" в разделе \"(.+)\"$")

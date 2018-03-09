@@ -19,19 +19,18 @@ public class  MarketPage extends BasePage{
     @FindBy(xpath = ".//span[contains(text(), 'Все категории')]//..")
     private WebElement allCategoriesBtn;
 
-    @FindBy(xpath = ".//*[contains(text(), 'Электроника')]")
-    private WebElement openElectronicsCategoryBtn;
 
-    public void openElectronicsCategoryPage() {
+    public void openCategoryPage(String itemName) {
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         if(!driver.findElements(By.xpath(".//span[contains(text(), 'Все категории')]")).isEmpty()){
             Actions actions = new Actions(driver);
             actions.moveToElement(allCategoriesBtn).build().perform();
-            waitForElement(openElectronicsCategoryBtn, 5);
-            openElectronicsCategoryBtn.click();
+            waitForElement(driver.findElement(By.xpath(".//*[contains(text(), '"+itemName+"')]")), 5);
+            driver.findElement(By.xpath(".//*[contains(text(), '"+itemName+"')]")).click();
         }
         else
-            openElectronicsCategoryBtn.click();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            driver.findElement(By.xpath(".//*[contains(text(), '"+itemName+"')]")).click();
+
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 }

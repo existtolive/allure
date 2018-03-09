@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 public class BasePageSteps {
 
     protected static WebDriver driver;
-    protected static String baseUrl;
     public static Properties properties = TestProperties.getInstance().getProperties();
 
     public static WebDriver getDriver(){
@@ -40,13 +39,8 @@ public class BasePageSteps {
                 driver = new ChromeDriver();
         }
 
-        baseUrl = properties.getProperty("app.url");
-        System.out.println(baseUrl);
-        //driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        //driver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
-        //driver.manage().window().maximize();
-        //driver.get(baseUrl);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
     }
 
     @After

@@ -6,16 +6,18 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import steps.BasePageSteps;
 
+import java.util.List;
+
 public class MainPage extends BasePage{
 
     public MainPage() {
         PageFactory.initElements(BasePageSteps.getDriver(), this);
     }
 
-    @FindBy(xpath = ".//a[@data-id='market']")
-    private WebElement yandexMarketBtn;
+    @FindBy(xpath = ".//div[@class='home-arrow__tabs']//a")
+    private List<WebElement> sectionList;
 
-    public void openMarketPage() {
-        yandexMarketBtn.click();
+    public void openSection(String itemName) {
+        selectFromCollection(itemName, sectionList);
     }
 }

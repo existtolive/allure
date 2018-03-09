@@ -48,9 +48,9 @@ public class SubcategoryPage extends BasePage {
     public void checkElementsCount( int count){
         listViewMode = listViewBtn.getAttribute("class").contains("checked_yes");
         if(listViewMode)
-            Assert.assertTrue("Кол-во элементов менее 12", driver.findElements(By.xpath("//div[contains(@class, 'n-snippet-card2__title')]//a")).size()>=count);
+            Assert.assertTrue("Кол-во элементов менее " + count, driver.findElements(By.xpath("//div[contains(@class, 'n-snippet-card2__title')]//a")).size()>=count);
         else
-            Assert.assertTrue("Кол-во элементов менее 12", driver.findElements(By.xpath("//div[contains(@class, 'n-snippet-cell2__title')]//a")).size()>=count);
+            Assert.assertTrue("Кол-во элементов менее " + count, driver.findElements(By.xpath("//div[contains(@class, 'n-snippet-cell2__title')]//a")).size()>=count);
     }
 
     public void remFirstElement(){
@@ -70,7 +70,7 @@ public class SubcategoryPage extends BasePage {
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
         if(driver.findElements(By.xpath(".//*[@class='n-title__text']//h1")).isEmpty())
             openFirstElement();
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         Assert.assertEquals("Первый товар в списке не совпадает с запомненным", firstElement, productTitle.getText());
     }
 

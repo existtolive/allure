@@ -26,7 +26,7 @@ public class CartPage extends BasePage {
     public WebElement removeAllBtn;
 
     @FindBy(xpath = ".//div[@class='eCartPage_title']//span[contains(text(), 'Корзина') and contains(text(), 'пуста')]")
-    public WebElement emptyCartMsg;
+    public List<WebElement> emptyCartMsgList;
     
     public void checkItemInCart(){
         for (WebElement item: cartItemsList) {
@@ -39,17 +39,24 @@ public class CartPage extends BasePage {
     }
 
     public void removeAll() {
+
         try{
             TimeUnit.SECONDS.sleep(7);
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        removeAllBtn.click();
+        //if(waitForElement(removeAllBtn, 10))
+            removeAllBtn.click();
+
+//        unknown error: Element <div class="bIconButton mRemove mGray jsRemoveAll">...</div> is not clickable at point (853, 321). Other element would receive the click: <div class="bCartPage
+//        mBlockActions
+//        ">...</div>
+
     }
 
     public void checkCart(){
-        Assert.assertTrue("Корзина не пуста", emptyCartMsg.isDisplayed());
+        Assert.assertTrue("Корзина не пуста", !emptyCartMsgList.isEmpty());
     }
 
 }
